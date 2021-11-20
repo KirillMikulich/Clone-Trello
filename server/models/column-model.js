@@ -1,23 +1,23 @@
 const sequelize = require('../db');
 const { DataTypes } = require('sequelize');
 
-const Token = sequelize.define('token', {
+const Sprint = sequelize.define('columns', {
   id: { 
     type: DataTypes.INTEGER, 
     primaryKey: true, 
     autoIncrement: true
   },
-  refreshToken: { 
+  name: { 
     type: DataTypes.TEXT, 
     allowNull: false
   },
-  userId: {
+  boardId: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'users',
+      model: 'boards',
       key: 'id'
     }
   }
 }, {timestamps: false, freezeTableName: true});
 
-module.exports = Token;
+module.exports = Sprint;

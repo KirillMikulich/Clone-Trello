@@ -1,15 +1,16 @@
 const sequelize = require('../db');
 const { DataTypes } = require('sequelize');
 
-const Token = sequelize.define('token', {
+const BoardUser = sequelize.define('board_user', {
   id: { 
     type: DataTypes.INTEGER, 
     primaryKey: true, 
     autoIncrement: true
   },
-  refreshToken: { 
-    type: DataTypes.TEXT, 
-    allowNull: false
+  isCreator: { 
+    type: DataTypes.BOOLEAN, 
+    allowNull: false,
+    defaultValue: false
   },
   userId: {
     type: DataTypes.INTEGER,
@@ -17,7 +18,14 @@ const Token = sequelize.define('token', {
       model: 'users',
       key: 'id'
     }
+  },
+  boardId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'boards',
+      key: 'id'
+    }
   }
 }, {timestamps: false, freezeTableName: true});
 
-module.exports = Token;
+module.exports = BoardUser;

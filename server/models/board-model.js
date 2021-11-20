@@ -14,10 +14,6 @@ const Boards = sequelize.define('boards', {
   name: {
     type: DataTypes.TEXT,
     allowNull: false
-  },
-  date: {
-    type: DataTypes.DATE,
-    allowNull: false
   }
 }, {timestamps: false, freezeTableName: true});
 

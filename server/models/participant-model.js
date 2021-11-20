@@ -1,15 +1,11 @@
 const sequelize = require('../db');
 const { DataTypes } = require('sequelize');
 
-const Token = sequelize.define('token', {
+const Participant = sequelize.define('participants', {
   id: { 
     type: DataTypes.INTEGER, 
     primaryKey: true, 
     autoIncrement: true
-  },
-  refreshToken: { 
-    type: DataTypes.TEXT, 
-    allowNull: false
   },
   userId: {
     type: DataTypes.INTEGER,
@@ -17,7 +13,14 @@ const Token = sequelize.define('token', {
       model: 'users',
       key: 'id'
     }
+  },
+  sprintId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'sprints',
+      key: 'id'
+    }
   }
 }, {timestamps: false, freezeTableName: true});
 
-module.exports = Token;
+module.exports = Participant;
