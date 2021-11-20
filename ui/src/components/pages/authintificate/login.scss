@@ -1,0 +1,46 @@
+.auth-form{
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px 40px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+    .text{
+      margin-bottom: 15px;
+    }
+    .row{
+      margin-bottom: 10px;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .label{
+        margin-right: 5px;
+      }
+      .input-textarea{
+        z-index: 0;
+        padding-right: 25px;
+      }
+      .show-ico{
+        position: absolute;
+        right: 2px;
+        top: 7px;
+        background-color: transparent;
+        padding-left: 5px;
+        z-index: 1;
+        &:hover{
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

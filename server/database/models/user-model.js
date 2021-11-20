@@ -12,10 +12,6 @@ const User = sequelize.define('users', {
     unique: true, 
     allowNull: false
   },
-  login: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
   password: { 
     type: DataTypes.TEXT, 
     allowNull: false
