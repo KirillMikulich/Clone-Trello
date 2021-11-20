@@ -13,11 +13,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 var corsOptions = {
-    "origin": "http://localhost:3000",
-    "methods": "GET, PUT, POST, DELETE",
-    "preflightContinue": true,
-    "optionsSuccessStatus": true,
-    "credentials": true
+  "origin": "http://localhost:3000",
+  "methods": "GET, PUT, POST, DELETE",
+  "preflightContinue": true,
+  "optionsSuccessStatus": true,
+  "credentials": true
 };
 
 app.use(cors(corsOptions));
@@ -25,11 +25,12 @@ app.use(cors(corsOptions));
 app.use('/api',router);
 
 const start = async() => {
-    try {
-        app.listen(PORT,()=>{console.log(`Server started on port ${PORT}`)});
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    app.listen(PORT,()=>{console.log(`Server started on port ${PORT}`)});
+  } 
+  catch (error) {
+    console.log(error);
+  }
 }
 
 start();

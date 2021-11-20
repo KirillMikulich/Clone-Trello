@@ -1,15 +1,14 @@
 const tokenService = require("./service/token-service");
 
 module.exports = function (res, req, next) {
-  try{
+  try {
     const auth = req.headers.authorization;
     if(!auth){
       return req.status(401).send({
         error: true,
         data: {
           message: 'Unauthorize'
-        }
-      });
+        }});
     }
 
     const accessToken = auth.split(' ')[1];
@@ -19,8 +18,7 @@ module.exports = function (res, req, next) {
         error: true,
         data: {
           message: 'Unauthorize'
-        }
-      });
+        }});
     }
 
     const userData = tokenService.validateAccessToken(accessToken);
@@ -30,18 +28,16 @@ module.exports = function (res, req, next) {
         error: true,
         data: {
           message: 'Unauthorize'
-        }
-      });
+        }});
     }
     req.user = userData;
     next();
   }
-  catch(error){
+  catch(error) {
     return req.status(401).send({
       error: true,
       data: {
         message: 'Unauthorize'
-      }
-    });
+      }});
   }
 }
