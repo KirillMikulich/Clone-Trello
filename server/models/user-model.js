@@ -8,13 +8,22 @@ const User = sequelize.define('users', {
     autoIncrement: true 
   },
   email: { 
-    type: DataTypes.STRING, 
+    type: DataTypes.TEXT, 
     unique: true, 
     allowNull: false
   },
-  password: { 
-    type: DataTypes.STRING, 
+  login: {
+    type: DataTypes.TEXT,
     allowNull: false
+  },
+  password: { 
+    type: DataTypes.TEXT, 
+    allowNull: false
+  },
+  ident: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    unique: true
   }
 }, { timestamps: false, freezeTableName: true });
 
