@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
-const sequelize = require('./db');
+const sequelize = require('./database/db');
 const router = require('./routes/index');
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -26,8 +26,8 @@ app.use('/api',router);
 
 const start = async() => {
   try {
-    await sequelize.authenticate();
-    await sequelize.sync();
+    //await sequelize.authenticate(); - проверка подключения
+    //await sequelize.sync(); - для генерации таблиц
     app.listen(PORT,()=>{console.log(`Server started on port ${PORT}`)});
   } 
   catch (error) {

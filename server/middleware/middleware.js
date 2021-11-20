@@ -1,4 +1,4 @@
-const tokenService = require("./service/token-service");
+const tokenService = require("../service/token-service");
 
 module.exports = function (res, req, next) {
   try {
@@ -40,4 +40,4 @@ module.exports = function (res, req, next) {
         message: 'Unauthorize'
       }});
   }
-}
+};

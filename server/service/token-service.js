@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const tokenModel = require('../models/index');
+const tokenModel = require('../database/models/index');
 
 module.exports = {
   generateToken(payload){

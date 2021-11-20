@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const models = require('../models/index');
+const models = require('../database/models/index');
 const tokenService = require('../service/token-service');
 
 module.exports = {
