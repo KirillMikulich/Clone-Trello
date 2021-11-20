@@ -1,5 +1,5 @@
 import React from "react";
-import AuthForm from "./controllers/auth-form";
+import AuthForm from "./components/auth-form";
 import AuthService from "./service/auth";
 
 function App() {
@@ -11,7 +11,6 @@ function App() {
   async function checkLogIn() {
     if(localStorage.getItem('token')){
       const user = await AuthService.checkUser();
-      console.log(user);
     }
   }
   
