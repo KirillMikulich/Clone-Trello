@@ -13,6 +13,10 @@ body{
   padding: 10px 40px;
   text-align: center;
   border-radius: 5px;
+  a{
+    text-decoration: none;
+    color:black;
+  }
 } 
 
 .blue-button{
@@ -20,7 +24,10 @@ body{
   border-color:  #0052CC;
   color: white;
   transition: background-color .3s;
-
+  a{
+    text-decoration: none;
+    color:white;
+  }
   &:hover{
     background-color: #0964ec;
   border-color:  #0964ec;

@@ -2,53 +2,42 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-import { useDispatch } from "react-redux";
-import { setUser } from '../../../store/actions/user';
 import auth from '../../../service/auth';
-import { Link } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
 
-import './login.scss';
+import { useDispatch } from "react-redux";
+import { setUser } from '../../../store/actions/user';
 
-export default function Login() {
+import './registration.scss';
+
+export default function Registration() {
 
   const [isShowPassword, setIsShowPassword] = React.useState(false);
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  
+  const [ident, setIdent] = React.useState('');
+
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  React.useEffect(() =>  {
-    checkLogIn();
-  }, [ ]);
-
-  async function checkLogIn() {
-    if(localStorage.getItem('token')) {
-      const user = await auth.checkUser();
-      if(user) {
-        dispatch(setUser(user));
+  async function register() {
+    try{
+      const response = await auth.register(email, password, ident);
+      if(response){
+        localStorage.setItem('token', response.accessToken);
+        dispatch(setUser(response.user));
         navigate("/main-page", { replace: true });
       }
     }
-  }
-
-  async function login() {
-    try{
-      const response = await auth.login(email, password);
-      localStorage.setItem('token', response.accessToken);
-      dispatch(setUser(response.user));
-      navigate("/main-page", { replace: true });
-    }
     catch(err){
-      alert("Проверьте данные. Возможно пользователь не зарегистрирован.");
+      alert("Проверьте email или идентификатор");
     }
   }
 
-  return (
-    <div className="auth-form">
+  return(
+    <div>
+      <div className="auth-form">
       <div className="auth-form__container">
         <div className="text">Войдите, что бы перейти дальше</div>
         <div className="row">
@@ -63,9 +52,13 @@ export default function Login() {
                             icon={isShowPassword ? faEyeSlash : faEye} 
                             onClick={() => setIsShowPassword(!isShowPassword)} />
         </div>
-        <div className="m5 button blue-button" onClick={login}>Войти</div>
-        <div className="m5 button blue-button"><Link to="/registration">Регистрация</Link></div>
+        <div className="row">
+          <div className="label">Идентификатор</div>
+          <input className="input-textarea" type="text" onChange={ e => setIdent(e.target.value) }  value={ident} />
+        </div>
+        <div className="m5 button blue-button" onClick={register}>Зарегистрироваться</div>
       </div>
     </div>
+    </div>
   );
-}
+};

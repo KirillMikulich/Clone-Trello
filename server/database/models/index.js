@@ -7,7 +7,16 @@ const Column = require('./column-model');
 const Participant = require('./participant-model');
 const Sprint = require('./sprint-model');
 
-module.exports = User | Token | Comments | Board | BoardUser | Column | Participant | Sprint;
+module.exports = { 
+  User, 
+  Token, 
+  Comments, 
+  Board, 
+  BoardUser, 
+  Column, 
+  Participant, 
+  Sprint
+};
 
 //Token.hasMany(User);
 

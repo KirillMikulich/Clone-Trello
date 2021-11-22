@@ -3,7 +3,7 @@ const models = require('../database/models/index');
 const tokenService = require('../service/token-service');
 
 module.exports = {
-  async registration(email, password) {
+  async registration(email, password, ident) {
     const candidate = await models.User.findOne({ where: {
       email: email
     }});
@@ -12,9 +12,17 @@ module.exports = {
       throw new Error(`Пользователь с почтовым адресом ${email} уже существует`);
     }
 
+    const identCheck =  await models.User.findOne({ where: {
+      ident: ident
+    }});
+
+    if(identCheck) {
+      throw new Error(`Пользователь с идентификатором ${email} уже существует`);
+    }
+
     const hashPass = await bcrypt.hash(password,3);
 
-    const user = await models.User.create({email, password: hashPass});
+    const user = await models.User.create({email, password: hashPass, ident});
 
     const tokens = tokenService.generateToken({ ...user });
     await tokenService.saveToken(user.id, tokens.refreshToken);
@@ -47,11 +55,10 @@ module.exports = {
     }
     const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = tokenService.findTokenDb(refreshToken);
-
     if(!userData || !tokenFromDb){
       throw new Error("user no auth");
     }
-    const user = await models.User.findOne({ where:{id:userData.id }});
+    const user = await models.User.findOne({ where:{id:userData.dataValues.id }});
 
     const tokens = tokenService.generateToken({...user});
     await tokenService.saveToken(user.id, tokens.refreshToken);
