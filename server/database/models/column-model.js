@@ -17,6 +17,10 @@ const Sprint = sequelize.define('columns', {
       model: 'boards',
       key: 'id'
     }
+  },
+  order: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {timestamps: false, freezeTableName: true});
 

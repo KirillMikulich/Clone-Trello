@@ -1,0 +1,44 @@
+.columns{
+  padding: 20px;
+  width: auto;
+  overflow: hidden;
+  .add-columns{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .columns-container{
+    display: flex;
+    margin-top: 10px;
+    flex-direction: row;
+    overflow: scroll;
+    height: 95%;
+    .column{
+      padding: 10px;
+      background-color: lightgray;
+      margin: 5px;
+      min-width: 300px;
+      &-container{
+        .title{
+          margin-bottom: 10px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          .btn-ico{
+            background-color: #172b4d;
+            color: white;
+            padding: 3px;
+            border-radius: 3px;
+          }
+        }
+
+        .controls{
+          display: flex;
+          height: 35px;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
