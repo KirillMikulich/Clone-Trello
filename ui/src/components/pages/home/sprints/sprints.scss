@@ -1,0 +1,25 @@
+.sprints{
+    .sprints-container{
+        display: flex;
+        flex-direction: column;
+        padding: 15px 5px 5px 5px;
+        .sprint-item{
+            margin-top: 5px;
+            background-color: white;
+            padding: 7px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .title{
+
+            }
+            .btn-ico{
+                background-color: #172b4d;
+                color: white;
+                padding: 3px;
+                border-radius: 3px;
+            }
+        }
+    }
+}

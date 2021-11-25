@@ -17,7 +17,7 @@ body{
     text-decoration: none;
     color:black;
   }
-} 
+}
 
 .blue-button{
   background-color: #0052CC;
@@ -34,6 +34,16 @@ body{
   cursor: pointer;
   }
 }
+
+ .btn-ico{
+     background-color: #172b4d;
+     color: white;
+     padding: 3px;
+     border-radius: 3px;
+    &:hover {
+        cursor: pointer;
+    }
+ }
 
 input {
   padding: 5px 10px;

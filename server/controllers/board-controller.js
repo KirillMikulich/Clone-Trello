@@ -61,7 +61,7 @@ module.exports = {
 
   async deleteBoardById(req, res) {
     try {
-      const {  boardId } = req.params;
+      const { boardId } = req.params;
 
       const boardData = await boardService.deleteBoardById( boardId);
 

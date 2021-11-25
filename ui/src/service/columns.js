@@ -6,6 +6,9 @@ const ColumnService = {
   },
   getAllColumns(boardId) {
     return $api.get(`/column/all-columns/${boardId}`).then(res => res.data);
+  },
+  deleteColumns(columnId) {
+      return $api.get(`/column/delete/${columnId}`).then(res => res.data);
   }
 };
 

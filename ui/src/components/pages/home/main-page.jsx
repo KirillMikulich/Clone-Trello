@@ -36,7 +36,7 @@ export default function MainPage(){
       <div className="page-container">
         <SideMenu selectedBoardIs={selectedBoardIs} setSelectedBoardId={setSelectedBoardId}></SideMenu>
         {
-          selectedBoardIs && <Board boardId={selectedBoardIs}></Board>
+            selectedBoardIs && <Board boardId={selectedBoardIs}></Board>
         }
       </div>
     </div>

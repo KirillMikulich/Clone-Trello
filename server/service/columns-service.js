@@ -22,5 +22,15 @@ module.exports = {
     }});
     columns = columns.sort((a, b) => a.order - b.order);
     return columns;
-  }
+  },
+
+    async deleteColumn(columnId) {
+      let columns = await models.Column.destroy({ where: {
+          id: columnId
+      }});
+
+      if(columns === null) throw new Error("Error delete");
+
+      return true;
+    }
 };

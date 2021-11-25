@@ -10,11 +10,11 @@ import './side-menu.scss';
 
 export default function SideMenu({selectedBoardIs ,setSelectedBoardId}){
   const user = useSelector(state => state.user);
-  const [boards, setBoards] = React.useState(null); 
+  const [boards, setBoards] = React.useState(null);
 
   const [name, setName] = React.useState('');
 
-  
+
 
   React.useEffect(() => {
     LoadMyDashBoard();
@@ -31,7 +31,7 @@ export default function SideMenu({selectedBoardIs ,setSelectedBoardId}){
   }
 
   async function deleteBoard(id){
-    if(id === selectedBoardIs) setSelectedBoardId(null);
+    setSelectedBoardId(null);
     await boardService.deleteBoard(id);
     LoadMyDashBoard();
   }
@@ -47,11 +47,11 @@ export default function SideMenu({selectedBoardIs ,setSelectedBoardId}){
   return(
     <div className="board">
       {
-        boards && 
+        boards &&
           <ul className="list-boards">
             {
-              boards.map(item => 
-                <li key={item.id} className={selectedBoardIs === item.boardId ? "list-boards__item selected": "list-boards__item"} 
+              boards.map(item =>
+                <li key={item.id} className={selectedBoardIs === item.boardId ? "list-boards__item selected": "list-boards__item"}
                     onClick={() => setSelectedBoardId(item.boardId)}>
                   <div className="text">
                     {
@@ -59,7 +59,7 @@ export default function SideMenu({selectedBoardIs ,setSelectedBoardId}){
                     }
                   </div>
                   {
-                    item.isCreator && 
+                    item.isCreator &&
                       <div>
                         <FontAwesomeIcon className="ico" icon={faUsersCog} />
                         <FontAwesomeIcon className="ico btn-ico" icon={faTrashAlt} onClick={() => deleteBoard(item.boardId)}/>
