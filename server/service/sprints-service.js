@@ -54,6 +54,6 @@ module.exports = {
 
     async allSprints(columnId) {
         let sprints = await models.Sprint.findAll({where: {columnId}});
-        return sprints.sort((a, b) => a.order - b.order);;
+        return sprints.sort((a, b) => a.order - b.order);
     }
 };
