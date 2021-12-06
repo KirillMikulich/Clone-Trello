@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { InputContainer } from './Input/InputContainer';
 import { List } from './List/List';
 import MoveService from '../../../../service/move';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteColumns, setColumns } from '../../../../store/actions/columns';
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -28,20 +30,24 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-
-export default function Board({boardId}) {
-    const [columns, setColumns] = React.useState([]);
+export default function Board() {
+    const boardId = useSelector((state) => state.boardId);
+    const columns = useSelector((state) => state.columns);
     const [title, setTitle] = React.useState('');
     const classes = useStyle();
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
+        dispatch(deleteColumns());
         loadColumns();
     }, [boardId]);
 
     async function loadColumns() {
-        const column = await ColumnService.getAllColumns(boardId);
-        if(column.length > 0){
-          setColumns([...column]);
+        if(boardId !== null) {
+            const column = await ColumnService.getAllColumns(boardId);
+            if(column.length > 0){
+                dispatch(setColumns([...column]));
+            }
         }
     }
 
@@ -67,17 +73,17 @@ export default function Board({boardId}) {
 
             const newColumnsList = JSON.parse(JSON.stringify(columns));
 
-            const column = newColumnsList.find(item => item.id.toString() === draggableId);
+            const column = newColumnsList.find(item => item.id.toString() === draggableId.replace('column','').replace('sprint',''));
             const index = newColumnsList.indexOf(column);
 
-            newColumnsList[index] = newColumnsList[destination.index];
-            newColumnsList[destination.index] = column;
+            newColumnsList[index] = newColumnsList[destination.index.replace('column','').replace('sprint','')];
+            newColumnsList[destination.index.replace('column','').replace('sprint','')] = column;
 
-            setColumns(newColumnsList); // - что не баговал интерйес, при получении одних и тех же данных
+            dispatch(setColumns(newColumnsList)); // - что не баговал интерйес, при получении одних и тех же данных
             //он не перерисуеться
 
 
-            MoveService.swipeColumns(draggableId, columns[destination.index].id)
+            MoveService.swipeColumns(draggableId.replace('column','').replace('sprint',''), columns[destination.index].id)
                 .then(res => {
                     loadColumns();
                 });
@@ -85,30 +91,31 @@ export default function Board({boardId}) {
         }
 
 
-        if (source.droppableId === destination.droppableId) {
+        if (source.droppableId.replace('column','').replace('sprint','') === destination.droppableId.replace('column','').replace('sprint','')) {
+            console.log(source.droppableId.replace('column','').replace('sprint',''));
             const newColumnsList = JSON.parse(JSON.stringify(columns));
-            const column = newColumnsList.find(item => item.id.toString() === source.droppableId);
+            const column = newColumnsList.find(item => item.id.toString() === source.droppableId.replace('column','').replace('sprint',''));
 
             const sprintsCopy = JSON.parse(JSON.stringify(column.sprints));
 
             column.sprints.splice(source.index, 1);
             column.sprints.splice(destination.index, 0, sprintsCopy[source.index]);
 
-            setColumns(newColumnsList);
-
-            MoveService.swipeSprints(destination.index, source.index)
+            dispatch(setColumns(newColumnsList));
+            MoveService.swipeSprints(destination.index, source.index, destination.droppableId.replace('column','').replace('sprint',''))
                 .then(res => {
                     loadColumns();
                 });
         } else {
+
             const newColumnsList = JSON.parse(JSON.stringify(columns));
-            const columnDrag = newColumnsList.find(item => item.id.toString() === destination.droppableId);
-            const columnDrop = newColumnsList.find(item => item.id.toString() === source.droppableId);
+            const columnDrag = newColumnsList.find(item => item.id.toString() === destination.droppableId.replace('column','').replace('sprint',''));
+            const columnDrop = newColumnsList.find(item => item.id.toString() === source.droppableId.replace('column','').replace('sprint',''));
             columnDrag.sprints.splice(destination.index +1, 0, columnDrop.sprints[source.index]);
             columnDrop.sprints.splice(source.index, 1);
-            setColumns(newColumnsList);
+            dispatch(setColumns(newColumnsList));
 
-            MoveService.moveSprintToColumn(draggableId, destination.droppableId, destination.index)
+            MoveService.moveSprintToColumn(draggableId.replace('column','').replace('sprint',''), destination.droppableId.replace('column','').replace('sprint',''), destination.index)
                 .then(res => {
                     loadColumns();
                 });
@@ -117,13 +124,13 @@ export default function Board({boardId}) {
 
   return(
     <div className={classes.columns}>
-        <DragDropContext className={columns.length !== 0 ? "columns-container": ''} onDragEnd={onDragEnd}>
+        <DragDropContext className={columns?.length !== 0 ? "columns-container": ''} onDragEnd={onDragEnd}>
             <Droppable droppableId="app" type="list" direction="horizontal">
                 {(provided) => (
                     <div className={classes.listContainer}
                          ref={provided.innerRef}
                          {...provided.droppableProps}>
-                         {columns.map((item, index) => {
+                         {columns?.map((item, index) => {
                             return <List key={item.id} columnId={item.id} title={item.name} index={index} sprints={item.sprints}/>;
                          })}
                         <InputContainer type="list" />

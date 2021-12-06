@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-import { Typography, InputBase } from '@material-ui/core';
+import { Typography, InputBase, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { Delete, Edit } from '@material-ui/icons';
+import { EditControls } from '../EditControls/EditControls';
 
 const useStyle = makeStyles((theme) => ({
     editableTitleContainer: {
@@ -24,7 +26,7 @@ const useStyle = makeStyles((theme) => ({
     },
 }));
 
-export default function Title({columnId, title}) {
+export default function Title({columnId, title, type}) {
     const [newTitle, setNewTitle] = React.useState();
     const [open, setOpen] = React.useState(false);
     const classes = useStyle();
@@ -61,7 +63,7 @@ export default function Title({columnId, title}) {
                     >
                         {title}
                     </Typography>
-                    <MoreHorizIcon />
+                    <EditControls type={type} id={columnId}/>
                 </div>
             )}
         </div>

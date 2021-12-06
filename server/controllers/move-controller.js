@@ -21,8 +21,8 @@ module.exports = {
 
     async moveSprint(req, res) {
         try {
-            const { dragId, dropId } = req.params;
-            await moveService.moveSprint(dragId, dropId);
+            const { dragId, dropId, columnId } = req.params;
+            await moveService.moveSprint(dragId, dropId, columnId);
 
             return res.status(200).send();
 

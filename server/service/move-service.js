@@ -13,8 +13,8 @@ module.exports = {
         await column2.save();
     },
 
-    async moveSprint(dragId, dropId) {
-        let sprints = await models.Sprint.findAll();
+    async moveSprint(dragId, dropId, columnId) {
+        let sprints = await models.Sprint.findAll({ where: {columnId}});
         sprints = sprints
             .sort((a, b) => a.order - b.order);
         let sprint1 = sprints[dropId];
@@ -38,9 +38,18 @@ module.exports = {
 
         if(sprintsColumn.length.toString() === position)
         {
-            sprint.order = sprintsColumn[sprintsColumn.length -1].order + 1;
-            sprint.columnId = columnId;
-            await sprint.save();
+            if(position === '0'){
+                sprint.order = 0;
+                sprint.columnId = columnId;
+                await sprint.save();
+            }
+            else{
+
+                sprint.order = sprintsColumn[sprintsColumn.length -1].order + 1;
+                sprint.columnId = columnId;
+                await sprint.save();
+            }
+
         }
         else
         {

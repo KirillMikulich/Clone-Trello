@@ -22,13 +22,13 @@ export function List({columnId, title, index, sprints}) {
     const classes = useStyle();
 
     return (
-        <Draggable draggableId={columnId.toString()} index={index}>
+        <Draggable draggableId={'column'+columnId.toString()} index={index}>
             {(provided) => (
                 <div {...provided.draggableProps} ref={provided.innerRef}>
                     <Paper className={classes.root} {...provided.dragHandleProps}>
                         <CssBaseline />
-                        <Title title={title} columnId={columnId} />
-                        <Droppable droppableId={columnId.toString()}>
+                        <Title title={title} columnId={columnId} type="card"/>
+                        <Droppable droppableId={'column'+columnId.toString()}>
                             {(provided) => (
                                 <div
                                     ref={provided.innerRef}

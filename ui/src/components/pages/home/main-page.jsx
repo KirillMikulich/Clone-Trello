@@ -15,7 +15,7 @@ export default function MainPage(){
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const [selectedBoardIs, setSelectedBoardId] = React.useState(null);
+  const boardId = useSelector((state) => state.boardId);
 
   React.useEffect(() =>  {
     checkLogIn();
@@ -34,9 +34,9 @@ export default function MainPage(){
     <div>
       <Header user={user}></Header>
       <div className="page-container">
-        <SideMenu selectedBoardIs={selectedBoardIs} setSelectedBoardId={setSelectedBoardId}></SideMenu>
+        <SideMenu></SideMenu>
         {
-            selectedBoardIs && <Board boardId={selectedBoardIs}></Board>
+            boardId && <Board></Board>
         }
       </div>
     </div>

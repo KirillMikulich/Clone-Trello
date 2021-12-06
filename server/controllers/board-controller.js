@@ -42,9 +42,8 @@ module.exports = {
 
   async addUserById(req, res) {
     try {
-      const { userId, boardId } = req.params;
-
-      const boardData = await boardService.addUserInBoard(userId, boardId);
+      const { email, boardId } = req.params;
+      const boardData = await boardService.addUserInBoard(email, boardId);
 
       return res.json(boardData);
 
@@ -76,5 +75,58 @@ module.exports = {
         }
       })
     }
-  }
+  },
+    async deleteBoardForUser(req, res) {
+        try {
+            const { userId, boardId } = req.params;
+
+            await boardService.deleteBoardForUser(userId, boardId);
+
+            return res.status(200).send();
+        }
+        catch (error) {
+            res.status(400).send({
+                error: true,
+                data: {
+                    message: error.message
+                }
+            })
+        }
+    },
+    async getBoardbyId(req, res) {
+        try {
+            const { boardId } = req.params;
+
+           const board  = await boardService.getBoardById(boardId);
+
+            return res.json(board);
+        }
+        catch (error) {
+            res.status(400).send({
+                error: true,
+                data: {
+                    message: error.message
+                }
+            })
+        }
+    },
+
+    async changeName(req, res) {
+        try {
+            const { boardId } = req.params;
+            const { name } = req.body;
+
+            const board  = await boardService.changeName(boardId, name);
+
+            return res.json(board);
+        }
+        catch (error) {
+            res.status(400).send({
+                error: true,
+                data: {
+                    message: error.message
+                }
+            })
+        }
+    },
 };

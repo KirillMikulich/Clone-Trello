@@ -10,9 +10,18 @@ const DashBoardService = {
   deleteBoard(boardId){
     return $api.get(`/board/delete-board/${boardId}`).then(res => res.data);
   },
-  addUserInBoard(userId, boardId){
-    return $api.get(`/board/add-user/${userId}/${boardId}`).then(res => res.data);
-  }
+  addUserInBoard(email, boardId){
+    return $api.get(`/board/add-user/${email}/${boardId}`).then(res => res.data);
+  },
+    deleteUserForId(userId, boardId) {
+        return $api.get(`/board/delete-user/${userId}/${boardId}`).then(res => res.data);
+    },
+    getBoardById(boardId){
+        return $api.get(`board/get-board/${boardId}`).then(res => res.data);
+    },
+    changeName(boardId, name) {
+        return $api.post(`board/change-name/${boardId}`, {name}).then(res => res.data);
+    }
 };
 
 export default  DashBoardService;

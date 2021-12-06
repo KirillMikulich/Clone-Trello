@@ -18,13 +18,21 @@ const useStyle = makeStyles((theme) => ({
     },
 }));
 
-export function InputContainer({ listId, type }) {
+
+export function InputContainer({ columnId, type, load }) {
     const classes = useStyle();
     const [open, setOpen] = React.useState(false);
+
+    function titleText() {
+        if (type === 'card') return '+ Добавить спринт';
+        if (type === 'list') return '+ Добавить столбец';
+        if (type === 'board') return '+ Добавить доску';
+    }
+
     return (
         <div className={classes.root}>
             <Collapse in={open}>
-                <InputCard setOpen={setOpen} listId={listId} type={type} />
+                <InputCard setOpen={setOpen} columnId={columnId} type={type} load={load}/>
             </Collapse>
             <Collapse in={!open}>
                 <Paper
@@ -33,7 +41,7 @@ export function InputContainer({ listId, type }) {
                     onClick={() => setOpen(!open)}
                 >
                     <Typography>
-                        {type === 'card' ? '+ Добавить спринт' : '+ Добавить столбец'}
+                        {titleText()}
                     </Typography>
                 </Paper>
             </Collapse>

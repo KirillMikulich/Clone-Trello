@@ -17,9 +17,9 @@ module.exports = {
           id: boardIds[i].boardId
         }});
 
-        if(boardFind !== null) 
-          boards.push({ 
-            id: boardIds[i].id, 
+        if(boardFind !== null)
+          boards.push({
+            id: boardIds[i].id,
             isCreator:  boardIds[i].isCreator,
             boardId: boardIds[i].boardId,
             number: boardFind.number,
@@ -57,16 +57,43 @@ module.exports = {
 
     return true;
   },
-  async addUserInBoard(userId, boardId) {
+  async addUserInBoard(email, boardId) {
 
     const user = await models.User.findOne({ where: {
-      ident: userId
+            email
     }})
 
     const board = await models.BoardUser.create({ isCreator: false, userId: user.id, boardId });
-    
+
     if(board == null) throw new Error("Не удалось добавить пользователя");
 
     return board;
+  },
+
+  async deleteBoardForUser(userId, boardId) {
+      const board =await models.BoardUser.destroy({ where: { userId, boardId }});
+      if(board == null) throw new Error("Не удалось удалить пользователя из доски");
+
+  },
+
+    async getBoardById(boardId) {
+      let board = await models.Board.findOne({where: { id: boardId}});
+
+      if(board === null) throw new Error("Error");
+      let newObj = { board: board, users: []};
+      let accessUsers = await models.BoardUser.findAll({where: { boardId, isCreator: false}});
+
+      for(let user in accessUsers) {
+          newObj.users.push(await models.User.findOne({where: {id: accessUsers[user].userId}}))
+      }
+
+      return newObj;
+    },
+
+    async changeName(boardId, name) {
+        let board = await models.Board.findOne({where: { id: boardId}});
+        board.name = name;
+        await board.save();
+        return board;
   }
 };

@@ -4,7 +4,6 @@ module.exports = {
     async addColumn(req, res) {
     try {
       const { boardId, name } = req.body;
-
       const column = await columnsService.addColumn(boardId, name);
 
       return res.json(column);
