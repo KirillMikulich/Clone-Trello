@@ -55,5 +55,34 @@ module.exports = {
     async allSprints(columnId) {
         let sprints = await models.Sprint.findAll({where: {columnId}});
         return sprints.sort((a, b) => a.order - b.order);
+    },
+    async getSprint(boardId, sprintId) {
+        let sprint = await models.Sprint.findOne({ where: {id: sprintId}});
+        let users = await models.BoardUser.findAll({where: {boardId: boardId}});
+
+        let participants = await models.Participant.findAll({ where: { sprintId }});
+
+        let newObj = { sprint, users: [], participant: [], comments: []};
+
+        for(let user in users) {
+            newObj.users.push(await models.User.findOne({where: {id: users[user].userId}}))
+        }
+
+        for(let participant in participants) {
+            newObj.participant.push(await models.User.findOne({where: {id: participants[participant].userId}}))
+        }
+
+        let comments = await models.Comments.findAll({where: { sprintId }})
+
+        newObj.comments = comments;
+
+        return newObj;
+    },
+    async changeName(sprintId, name) {
+        let sprint = await models.Sprint.findOne({ where: {id: sprintId}});
+        sprint.name = name;
+
+        return await sprint.save();
     }
+
 };

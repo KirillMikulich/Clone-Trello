@@ -6,6 +6,7 @@ import ColumnService from '../../../../../service/columns';
 import { useDispatch, useSelector } from 'react-redux';
 import { setColumns } from '../../../../../store/actions/columns';
 import SprintService from '../../../../../service/sprints';
+import { SprintModal } from '../../../../modal/sprint-modal/SprintModal';
 
 const useStyle = makeStyles((theme) => ({
     deleteBtn: {
@@ -22,6 +23,10 @@ export function EditControls({id, type}) {
     const classes = useStyle();
     const dispatch = useDispatch();
     const boardId = useSelector((state) => state.boardId);
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     async function loadColumns() {
         if(boardId !== null) {
@@ -41,22 +46,18 @@ export function EditControls({id, type}) {
         await loadColumns();
     }
 
-    async function onEditClick() {
-        if(type === 'card') {
-
-        } else {
-
-        }
-    }
-
     return (
         <div>
-            <IconButton className={classes.deleteBtn} onClick={onEditClick}>
-                <Edit className={classes.icon} />
-            </IconButton>
+            {
+                type !== 'card' && <IconButton className={classes.deleteBtn} onClick={handleOpen}>
+                    <Edit className={classes.icon} />
+                </IconButton>
+            }
+
             <IconButton className={classes.deleteBtn} onClick={onDelete}>
                 <Delete className={classes.icon} />
             </IconButton>
+            <SprintModal open={open} handleClose={handleClose} sprintId={id}/>
         </div>
     );
 }

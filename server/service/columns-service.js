@@ -42,5 +42,14 @@ module.exports = {
       if(columns === null) throw new Error("Error delete");
 
       return true;
+    },
+
+    async changeTitle(columnId, title) {
+        let column = await models.Column.findOne({ where: {
+                id: columnId
+            }});
+
+        column.name = title;
+        return await column.save();
     }
 };

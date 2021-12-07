@@ -54,5 +54,23 @@ module.exports = {
                 }
             })
         }
+    },
+    async changeName(req, res) {
+        try {
+            const { columnId, title} = req.params;
+
+            const column = await columnsService.changeTitle(columnId,title);
+
+            return res.json(column);
+
+        }
+        catch (error) {
+            res.status(400).send({
+                error: true,
+                data: {
+                    message: error.message
+                }
+            })
+        }
     }
 };

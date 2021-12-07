@@ -11,5 +11,7 @@ router.post('/add-comment', sprintController.addComment);
 router.get('/delete-comment/:id', sprintController.deleteComment);
 router.get('/all-comment/:sprintId', sprintController.allCommentBySprint);
 router.get('/all-sprint/:columnId', sprintController.allSprints);
+router.get('/sprint/:boardId/:sprintId', sprintController.getSprint);
+router.get('/change-name/:sprintId/:name', sprintController.changeName);
 
 module.exports = router;

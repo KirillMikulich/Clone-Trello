@@ -171,4 +171,42 @@ module.exports = {
             })
         }
     },
+
+    async getSprint(req, res) {
+        try {
+            const { boardId, sprintId } = req.params;
+
+            const sprint = await sprintService.getSprint(boardId, sprintId);
+
+            return res.json(sprint);
+
+        }
+        catch (error) {
+            res.status(400).send({
+                error: true,
+                data: {
+                    message: error.message
+                }
+            })
+        }
+    },
+
+    async changeName(req,res) {
+        try {
+            const { sprintId, name } = req.params;
+
+            const sprint = await sprintService.changeName(sprintId, name);
+
+            return res.json(sprint);
+
+        }
+        catch (error) {
+            res.status(400).send({
+                error: true,
+                data: {
+                    message: error.message
+                }
+            })
+        }
+    }
 };

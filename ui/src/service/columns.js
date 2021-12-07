@@ -9,7 +9,10 @@ const ColumnService = {
   },
   deleteColumns(columnId) {
       return $api.get(`/column/delete/${columnId}`).then(res => res.data);
-  }
+  },
+    changeTitle(columnId, title){
+      return $api.get(`/column/change-name/${columnId}/${title}`).then(res => res.data);
+    }
 };
 
 export default  ColumnService;

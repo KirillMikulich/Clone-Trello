@@ -17,9 +17,9 @@ export default function SideMenu(){
   const boardId = useSelector((state) => state.boardId);
   const dispatch = useDispatch();
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+const [open, setOpen] = React.useState(false);
+const handleOpen = () => setOpen(true);
+const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     LoadMyDashBoard();
